@@ -5,6 +5,7 @@
 // TODO: Längenüberprüfung von getData in Setter verschieben!!!
 package com.github.dflex.tag.id3;
 
+import com.github.dflex.StringHelper;
 import com.github.dflex.tag.Tag;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,26 +17,31 @@ import com.github.dflex.tag.Genre;
  * @author Dominik
  */
 public class ID3v1 implements ID3 {
-    private String identifier;  // Sollte immer "TAG" sein
-    private String artist;      // Name des Künstlers
-    private String album;       // Titel des Albums
-    private String title;       // Titel des Liedes
-    private String comment;     // Kommentar
-    private Date date;          // Hier: Das Releasejahr
-    private Genre genre;        // Das Genre
-
+    String identifier;  // Sollte immer "TAG" sein
+    String artist;      // Name des Künstlers
+    String album;       // Titel des Albums
+    String title;       // Titel des Liedes
+    String comment;     // Kommentar
+    Date date;          // Hier: Das Releasejahr
+    Genre genre;        // Das Genre
+    
+    
+    /**
+     * Generiert einen ID3v1-Tag aus einem schon gegebenen Tag
+     * @param tag 
+     */
     public ID3v1(Tag tag) {
         this.identifier = "TAG";
-        this.artist = tag.getArtist();
-        this.album = tag.getAlbum();
-        this.title = tag.getTitle();
-        this.comment = tag.getComment();
+        this.artist = StringHelper.getInstance().trimString(tag.getArtist(),30);
+        this.album = StringHelper.getInstance().trimString(tag.getAlbum(),30);
+        this.title = StringHelper.getInstance().trimString(tag.getTitle(),30);
+        this.comment = StringHelper.getInstance().trimString(tag.getComment(),30);
         this.date = tag.getDate();
         this.genre = tag.getGenre();
     }
 
     /**
-     *
+     * Generiert einen ID3v1-Tag mithilfe der übergebenen Daten
      * @param artist
      * @param album
      * @param title
@@ -46,34 +52,36 @@ public class ID3v1 implements ID3 {
     public ID3v1(String artist, String album, String title, String comment, Date year, Genre genre) {
         // TODO: länge der Strings auf 30chars begrenzen und trimmen
         this.identifier = "TAG";
-        this.artist = artist;
-        this.album = album;
-        this.title = title;
-        this.comment = comment;
+        this.artist = StringHelper.getInstance().trimString(artist,30);
+        this.album = StringHelper.getInstance().trimString(album,30);
+        this.title = StringHelper.getInstance().trimString(title,30);
+        this.comment = StringHelper.getInstance().trimString(comment,30);
         this.date = year;
         this.genre = genre;
     }
 
     /**
-     *
+     * Generiert einen ID3v1-Tag aus einem Byte-Array
      * @param data
-     * @throws InvalidInputData
+     * @throws InvalidInputData Wenn das Byte-Array zu klein ist, oder nicht die Daten für einen ID3v1-Tag enthält
      */
     public ID3v1(byte[] data) throws InvalidInputData {
         if(data.length == 127) {
             identifier = new String(data,0,3);
-            // Check wether data contains valid ID3v1 data.
+            // Überprüfung, ob die das Array den richtigen Tagtyp enthält
             if(!identifier.equalsIgnoreCase("TAG")) {
                 throw new InvalidInputData("ID3v1");
             }
+            // Jedes Feld ist 30 Chars lang, Leerzeichen sollten entfernt werden
             title = new String(data, 3, 30).trim();
             artist = new String(data,33,30).trim();
             album = new String(data,63,30).trim();
-            // Kalender auf den 1.1. um 00:00:00 setzen
+            // Kalender auf das richtige Datum setzen (Uhrzeit auf 00:00:00 setzen)
             Calendar cal = Calendar.getInstance();
             cal.set(new Integer(new String(data,93,4)), 0, 1, 0, 0, 0);
             date = cal.getTime();
             comment = new String(data,97,30).trim();
+            // Das Genre setzen
             if(Genre.values().length < data[127]) {
                 this.genre = Genre.values()[data[127]];
             }
@@ -82,14 +90,11 @@ public class ID3v1 implements ID3 {
         }
     }
 
-    /*
-     *
-     *
-     */
     /**
      * Returns the identifier, here TAG
      * @return
      */
+    @Override
     public String getIdentifier() {
         return identifier;
     }
@@ -98,6 +103,7 @@ public class ID3v1 implements ID3 {
      * Returns the artist
      * @return
      */
+    @Override
     public String getArtist() {
         return artist;
     }
@@ -106,6 +112,7 @@ public class ID3v1 implements ID3 {
      * Returns the albumname
      * @return
      */
+    @Override
     public String getAlbum() {
         return album;
     }
@@ -114,6 +121,7 @@ public class ID3v1 implements ID3 {
      * returns the songtitle
      * @return
      */
+    @Override
     public String getTitle() {
         return title;
     }
@@ -122,6 +130,7 @@ public class ID3v1 implements ID3 {
      * returns the comment
      * @return
      */
+    @Override
     public String getComment() {
         return comment;
     }
@@ -130,6 +139,7 @@ public class ID3v1 implements ID3 {
      * returns the date, here the year only
      * @return
      */
+    @Override
     public Date getDate() {
         return date;
     }
@@ -138,6 +148,7 @@ public class ID3v1 implements ID3 {
      * returns the genre
      * @return
      */
+    @Override
     public Genre getGenre() {
         return genre;
     }
@@ -146,33 +157,34 @@ public class ID3v1 implements ID3 {
      * Sets the albumname with a max length of 30 chars. Strings bigger than 30 chars will be cropped.
      * @param album
      */
+    @Override
     public void setAlbum(String album) {
-        int length = (album.length() > 30)? 30 : album.length();
-        this.album = album.trim().substring(0, length);
+        this.album = StringHelper.getInstance().trimString(album,30);
     }
 
     /**
      * Sets the artistname with a max length of 30 chars. Strings bigger than 30 chars will be cropped.
      * @param artist
      */
+    @Override
     public void setArtist(String artist) {
-        int length = (artist.length() > 30)? 30 : artist.length();
-        this.artist = artist.trim().substring(0, length);
+        this.artist = StringHelper.getInstance().trimString(artist,30);
     }
 
     /**
      * Sets the comment with a max length of 30 chars. Strings bigger than 30 chars will be cropped.
      * @param comment
      */
+    @Override
     public void setComment(String comment) {
-        int length = (comment.length() > 30)? 30 : comment.length();
-        this.comment = comment.trim().substring(0,length);
+        this.comment = StringHelper.getInstance().trimString(comment,30);
     }
 
     /**
      *
      * @param date
      */
+    @Override
     public void setDate(Date date) {
         this.date = date;
     }
@@ -181,6 +193,7 @@ public class ID3v1 implements ID3 {
      *
      * @param genre
      */
+    @Override
     public void setGenre(Genre genre) {
         this.genre = genre;
     }
@@ -189,15 +202,16 @@ public class ID3v1 implements ID3 {
      *
      * @param title
      */
+    @Override
     public void setTitle(String title) {
-        int length = (title.length() > 30)? 30 : title.length();
-        this.title = title.trim().substring(0, length);
+        this.title = StringHelper.getInstance().trimString(title,30);
     }
 
     /**
-     *
+     * Generiert ein Byte-Array
      * @return
      */
+    @Override
     public byte[] getData() {
         byte[] result = new byte[128];
 
@@ -228,6 +242,6 @@ public class ID3v1 implements ID3 {
 
     @Override
     public String toString() {
-        return "ID3v1{" + "identifier=" + identifier + "artist=" + artist + "album=" + album + "title=" + title + "comment=" + comment + "date=" + date + "genre=" + genre + '}';
-    }
+        return "ID3v1{" + "identifier=" + identifier + " artist=" + artist + " album=" + album + " title=" + title + " comment=" + comment + " date=" + date + " genre=" + genre + '}';
+    } 
 }
