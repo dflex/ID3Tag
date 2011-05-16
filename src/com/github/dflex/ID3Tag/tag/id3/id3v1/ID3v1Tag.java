@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 // TODO: Längenüberprüfung von getData in Setter verschieben!!!
-package com.github.dflex.ID3Tag.tag.id3;
+package com.github.dflex.ID3Tag.tag.id3.id3v1;
 
 import com.github.dflex.ID3Tag.exceptions.InvalidInputData;
 import java.util.Calendar;
@@ -11,13 +11,15 @@ import java.util.Date;
 import com.github.dflex.ID3Tag.helper.StringHelper;
 import com.github.dflex.ID3Tag.tag.Genre;
 import com.github.dflex.ID3Tag.tag.Tag;
+import com.github.dflex.ID3Tag.tag.id3.ID3Tag;
 
 
 /**
  *
  * @author Dominik
  */
-public class ID3v1 implements ID3 {
+public class ID3v1Tag implements ID3Tag {
+    // TODO: Auf Paketsichtbarkeit umbauen (und in ID3v11 verwenden)
     private String identifier;  // Sollte immer "TAG" sein
     private String artist;      // Name des Künstlers
     private String album;       // Titel des Albums
@@ -31,7 +33,7 @@ public class ID3v1 implements ID3 {
      * Generiert einen ID3v1-Tag aus einem schon gegebenen Tag
      * @param tag 
      */
-    public ID3v1(Tag tag) {
+    public ID3v1Tag(Tag tag) {
         this.identifier = "TAG";
         this.artist = StringHelper.getInstance().trimString(tag.getArtist(),30);
         this.album = StringHelper.getInstance().trimString(tag.getAlbum(),30);
@@ -50,7 +52,7 @@ public class ID3v1 implements ID3 {
      * @param year
      * @param genre
      */
-    public ID3v1(String artist, String album, String title, String comment, Date year, Genre genre) {
+    public ID3v1Tag(String artist, String album, String title, String comment, Date year, Genre genre) {
         // TODO: länge der Strings auf 30chars begrenzen und trimmen
         this.identifier = "TAG";
         this.artist = StringHelper.getInstance().trimString(artist,30);
@@ -66,7 +68,7 @@ public class ID3v1 implements ID3 {
      * @param data
      * @throws InvalidInputData Wenn das Byte-Array zu klein ist, oder nicht die Daten für einen ID3v1-Tag enthält
      */
-    public ID3v1(byte[] data) throws InvalidInputData {
+    public ID3v1Tag(byte[] data) throws InvalidInputData {
         if(data.length == 127) {
             identifier = new String(data,0,3);
             // Überprüfung, ob die das Array den richtigen Tagtyp enthält

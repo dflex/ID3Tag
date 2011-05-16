@@ -14,7 +14,7 @@ import com.github.dflex.ID3Tag.tag.Tag;
  *
  * @author Dominik
  */
-public interface ID3 extends Tag {
+public interface ID3Tag extends Tag {
 
     // Getter
     public String getIdentifier();

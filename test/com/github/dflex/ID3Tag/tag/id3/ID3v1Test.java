@@ -4,6 +4,7 @@
  */
 package com.github.dflex.ID3Tag.tag.id3;
 
+import com.github.dflex.ID3Tag.tag.id3.id3v1.ID3v1Tag;
 import com.github.dflex.ID3Tag.tag.Genre;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,7 +21,7 @@ import static org.junit.Assert.*;
  */
 public class ID3v1Test {
     
-    private ID3v1 testTag;
+    private ID3v1Tag testTag;
     
     public ID3v1Test() {
     }
@@ -36,7 +37,7 @@ public class ID3v1Test {
     @Before
     public void setUp() {
         // Initialisieren der Testklasse mit Strings der Länge 32
-        testTag = new ID3v1("123456789012345678901234567890!!", "123456789012345678901234567890!!", "123456789012345678901234567890!!", "123456789012345678901234567890!!", Calendar.getInstance().getTime(), Genre.Dance);
+        testTag = new ID3v1Tag("123456789012345678901234567890!!", "123456789012345678901234567890!!", "123456789012345678901234567890!!", "123456789012345678901234567890!!", Calendar.getInstance().getTime(), Genre.Dance);
     }
     
     @After
@@ -49,7 +50,7 @@ public class ID3v1Test {
     @Test
     public void testGetIdentifier() {
         System.out.println("getIdentifier");
-        ID3v1 instance = testTag;
+        ID3v1Tag instance = testTag;
         String expResult = "TAG";
         String result = instance.getIdentifier();
         assertEquals(expResult, result);
@@ -61,7 +62,7 @@ public class ID3v1Test {
     @Test
     public void testGetArtist() {
         System.out.println("getArtist");
-        ID3v1 instance = testTag;
+        ID3v1Tag instance = testTag;
         String expResult = "123456789012345678901234567890";
         String result = instance.getArtist();
         assertEquals(expResult, result);
@@ -73,7 +74,7 @@ public class ID3v1Test {
     @Test
     public void testGetAlbum() {
         System.out.println("getAlbum");
-        ID3v1 instance = testTag;
+        ID3v1Tag instance = testTag;
         String expResult = "123456789012345678901234567890";
         String result = instance.getAlbum();
         assertEquals(expResult, result);
@@ -85,7 +86,7 @@ public class ID3v1Test {
     @Test
     public void testGetTitle() {
         System.out.println("getTitle");
-        ID3v1 instance = testTag;
+        ID3v1Tag instance = testTag;
         String expResult = "123456789012345678901234567890";
         String result = instance.getTitle();
         assertEquals(expResult, result);
@@ -97,7 +98,7 @@ public class ID3v1Test {
     @Test
     public void testGetComment() {
         System.out.println("getComment");
-        ID3v1 instance = testTag;
+        ID3v1Tag instance = testTag;
         String expResult = "123456789012345678901234567890";
         String result = instance.getComment();
         assertEquals(expResult, result);
@@ -109,7 +110,7 @@ public class ID3v1Test {
     @Test
     public void testGetDate() {
         System.out.println("getDate");
-        ID3v1 instance = testTag;
+        ID3v1Tag instance = testTag;
         int expResult = 2011;
         Calendar.getInstance().setTime(instance.getDate());
         int result = Calendar.getInstance().get(Calendar.YEAR);
@@ -122,7 +123,7 @@ public class ID3v1Test {
     @Test
     public void testGetGenre() {
         System.out.println("getGenre");
-        ID3v1 instance = testTag;
+        ID3v1Tag instance = testTag;
         Genre expResult = Genre.Dance;
         Genre result = instance.getGenre();
         assertEquals(expResult, result);
@@ -135,7 +136,7 @@ public class ID3v1Test {
     public void testSetAlbum() {
         System.out.println("setAlbum");
         String album = null;
-        ID3v1 instance = testTag;
+        ID3v1Tag instance = testTag;
         instance.setAlbum(album);
     }
 
@@ -146,7 +147,7 @@ public class ID3v1Test {
     public void testSetArtist() {
         System.out.println("setArtist");
         String artist = "";
-        ID3v1 instance = testTag;
+        ID3v1Tag instance = testTag;
         instance.setArtist(artist);
     }
 
@@ -157,7 +158,7 @@ public class ID3v1Test {
     public void testSetComment() {
         System.out.println("setComment");
         String comment = "";
-        ID3v1 instance = testTag;
+        ID3v1Tag instance = testTag;
         instance.setComment(comment);
     }
 
@@ -168,7 +169,7 @@ public class ID3v1Test {
     public void testSetDate() {
         System.out.println("setDate");
         Date date = null;
-        ID3v1 instance = testTag;
+        ID3v1Tag instance = testTag;
         instance.setDate(date);
     }
 
@@ -179,7 +180,7 @@ public class ID3v1Test {
     public void testSetGenre() {
         System.out.println("setGenre");
         Genre genre = null;
-        ID3v1 instance = testTag;
+        ID3v1Tag instance = testTag;
         instance.setGenre(genre);
     }
 
@@ -190,7 +191,7 @@ public class ID3v1Test {
     public void testSetTitle() {
         System.out.println("setTitle");
         String title = "";
-        ID3v1 instance = testTag;
+        ID3v1Tag instance = testTag;
         instance.setTitle(title);
     }
 
@@ -200,7 +201,7 @@ public class ID3v1Test {
     @Test
     public void testGetData() {
         System.out.println("getData");
-        ID3v1 instance = testTag;
+        ID3v1Tag instance = testTag;
         byte[] expResult = new byte[128];
         System.arraycopy("TAG".getBytes(), 0, expResult, 0, 3);
         System.arraycopy("123456789012345678901234567890".getBytes(), 0, expResult, 3, 30);
@@ -219,7 +220,7 @@ public class ID3v1Test {
     @Test
     public void testToString() {
         System.out.println("toString");
-        ID3v1 instance = testTag;
+        ID3v1Tag instance = testTag;
         Calendar.getInstance().setTime(instance.getDate());
         String expResult = "ID3v1{" + "identifier=TAG artist=123456789012345678901234567890 album=123456789012345678901234567890 title=123456789012345678901234567890 comment=123456789012345678901234567890 date=" + Calendar.getInstance().getTime() + " genre=Dance}";
         String result = instance.toString();

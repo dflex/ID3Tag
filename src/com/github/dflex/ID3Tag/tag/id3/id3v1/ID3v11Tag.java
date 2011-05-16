@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package com.github.dflex.ID3Tag.tag.id3;
+package com.github.dflex.ID3Tag.tag.id3.id3v1;
 
 import com.github.dflex.ID3Tag.exceptions.InvalidInputData;
 import com.github.dflex.ID3Tag.helper.StringHelper;
@@ -15,11 +15,11 @@ import java.util.Date;
  *
  * @author Dominik
  */
-public class ID3v11 extends ID3v1 {
+public class ID3v11Tag extends ID3v1Tag {
 
     private byte tracknumber;
 
-    public ID3v11(Tag tag) {
+    public ID3v11Tag(Tag tag) {
         super(tag);
         // Kommentar ist bei ID3v1.1 nur 28 Zeichen lang, letztes Zeichen ist die Titelnummer
         String comment = super.getComment();
@@ -27,16 +27,15 @@ public class ID3v11 extends ID3v1 {
         super.setComment(comment.substring(0, comment.length()-2));
     }
 
-    public ID3v11(byte[] data) throws InvalidInputData {
+    public ID3v11Tag(byte[] data) throws InvalidInputData {
         super(data);
         String comment = super.getComment();
         tracknumber = comment.getBytes()[comment.length()-1];
         super.setComment(comment.substring(0, comment.length()-2));
     }
 
-    public ID3v11(String artist, String album, String title, String comment, byte tracknumber, Date year, Genre genre) {
-        super(artist, album, title, comment, year, genre);
-        this.setComment(comment);
+    public ID3v11Tag(String artist, String album, String title, String comment, byte tracknumber, Date year, Genre genre) {
+        super(artist, album, title, StringHelper.getInstance().trimString(comment, 28), year, genre);
         this.tracknumber = tracknumber;
     }
 
