@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package com.github.dflex.exceptions;
+package com.github.dflex.ID3Tag.exceptions;
 
 /**
  *

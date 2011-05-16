@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.dflex;
+package com.github.dflex.ID3Tag.helper;
 
 /**
  *

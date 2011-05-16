@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.dflex.tag.id3;
+package com.github.dflex.ID3Tag.tag.id3;
 
-import com.github.dflex.tag.Genre;
+import com.github.dflex.ID3Tag.tag.Genre;
 import java.util.Calendar;
 import java.util.Date;
 import org.junit.After;

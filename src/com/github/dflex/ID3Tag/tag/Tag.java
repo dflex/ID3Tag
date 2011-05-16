@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package com.github.dflex.tag;
+package com.github.dflex.ID3Tag.tag;
 
 import java.util.Date;
 

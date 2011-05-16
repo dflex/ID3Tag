@@ -3,27 +3,28 @@
  * and open the template in the editor.
  */
 // TODO: Längenüberprüfung von getData in Setter verschieben!!!
-package com.github.dflex.tag.id3;
+package com.github.dflex.ID3Tag.tag.id3;
 
-import com.github.dflex.StringHelper;
-import com.github.dflex.tag.Tag;
+import com.github.dflex.ID3Tag.exceptions.InvalidInputData;
 import java.util.Calendar;
 import java.util.Date;
-import com.github.dflex.exceptions.InvalidInputData;
-import com.github.dflex.tag.Genre;
+import com.github.dflex.ID3Tag.helper.StringHelper;
+import com.github.dflex.ID3Tag.tag.Genre;
+import com.github.dflex.ID3Tag.tag.Tag;
+
 
 /**
  *
  * @author Dominik
  */
 public class ID3v1 implements ID3 {
-    String identifier;  // Sollte immer "TAG" sein
-    String artist;      // Name des Künstlers
-    String album;       // Titel des Albums
-    String title;       // Titel des Liedes
-    String comment;     // Kommentar
-    Date date;          // Hier: Das Releasejahr
-    Genre genre;        // Das Genre
+    private String identifier;  // Sollte immer "TAG" sein
+    private String artist;      // Name des Künstlers
+    private String album;       // Titel des Albums
+    private String title;       // Titel des Liedes
+    private String comment;     // Kommentar
+    private Date date;          // Hier: Das Releasejahr
+    private Genre genre;        // Das Genre
     
     
     /**

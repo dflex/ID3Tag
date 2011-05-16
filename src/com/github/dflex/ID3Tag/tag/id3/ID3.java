@@ -3,9 +3,12 @@
  * and open the template in the editor.
  */
 
-package com.github.dflex.tag.id3;
+package com.github.dflex.ID3Tag.tag.id3;
 
-import com.github.dflex.tag.Tag;
+import com.github.dflex.ID3Tag.tag.Tag;
+
+
+
 
 /**
  *
