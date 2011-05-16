@@ -26,17 +26,21 @@ public abstract class ID3v2Tag implements ID3Tag {
     public ID3v2Tag(ID3v2Header header, ID3v2Footer footer) {
         this.header = header;
         this.footer = footer;
+        header.setFooter(true);
     }
 
     public ID3v2Tag(ID3v2Header header, ID3v2ExtendedHeader extendedHeader) {
         this.header = header;
         this.extendedHeader = extendedHeader;
+        header.setExtendedHeader(true);
     }
 
     public ID3v2Tag(ID3v2Header header, ID3v2ExtendedHeader extendedHeader, ID3v2Footer footer) {
         this.header = header;
         this.extendedHeader = extendedHeader;
         this.footer = footer;
+        header.setFooter(true);
+        header.setExtendedHeader(true);
     }
 
     public ID3v2Tag(ID3v2Header header, LinkedList<ID3v2Frame> frames) {
@@ -44,14 +48,12 @@ public abstract class ID3v2Tag implements ID3Tag {
         this.frames = frames;
     }
     
-    
-    
     public boolean hasExtendedHeader() {
         return header.isSetExtendedHeaderBit();
     }
     
     public boolean hasFooter() {
-        return header.isSetFooterBid();
+        return header.isSetFooterBit();
     }
     
     public boolean isUsingPadding() {
